@@ -8,12 +8,14 @@
   <title>Workspace</title>
 </head>
 <body>
+
   <header class="header">
     <div class="container header__container">
       <img src="./img/logo.svg" alt="Логотип Work Space" class="header__logo">
       <a href="#vacancies" class="header__link">Посмотреть вакансии</a>
     </div>
   </header>
+
   <main class="main">
 
     <section class="hero">
@@ -27,7 +29,7 @@
     <section class="vacancies" id="vacancies">
       <div class="container vacancies__container">
         <section class="vacancies__filter filter">
-          <h2 class="filter__title">Фильтер</h2>
+          <h2 class="filter__title">Фильтр</h2>
           <form class="filter__form">
 
             <fieldset class="filter__fieldset">
@@ -64,17 +66,32 @@
                 <legend class="filter__legend">Формат</legend>
 
                 <label class="filter__label checkbox">
-                  <input class="checkbox__input" type="checkbox" name="format" value="Офис">
+                  <input 
+                    class="checkbox__input" 
+                    type="checkbox" 
+                    name="format" 
+                    value="Офис"
+                  >
                   Офис
                 </label>
 
                 <label class="filter__label checkbox">
-                  <input class="checkbox__input" type="checkbox" name="format" value="Удаленный">
+                  <input 
+                    class="checkbox__input" 
+                    type="checkbox" 
+                    name="format" 
+                    value="Удаленный"
+                  >
                   Удаленный
                 </label>
 
                 <label class="filter__label checkbox">
-                  <input class="checkbox__input" type="checkbox" name="format" value="Гибкий">
+                  <input 
+                    class="checkbox__input" 
+                    type="checkbox" 
+                    name="format" 
+                    value="Гибкий"
+                  >
                   Гибкий
                 </label>
 
@@ -347,14 +364,20 @@
   <footer class="footer">
     <div class="container footer__container">
       <img class="footer__logo" src="./img/logo-footer.svg" alt="Логотип Work Space">
-      <p class="footer__copyright">&copy; Work Space, 2023</p>
 
-      <ul class="footer__contacts">
-        <li class="footer__contact">
-          Designer: <a class="footer__link" href="#!">Anastasia Ilina</a>
-          Developer: <a class="footer__link" href="#!">Tatiana Yakushonok</a>
-        </li>
-      </ul>
+      <div class="footer__info">
+        <p class="footer__copyright">&copy; Work Space, 2023</p>
+
+        <ul class="footer__contacts">
+          <li class="footer__contact">
+            Designer: <a class="footer__link" href="#!">Anastasia Ilina</a>
+          </li>
+          <li class="footer__contact">
+            Developer: <a class="footer__link" href="#!">Tatiana Yakushonok</a>
+          </li>
+        </ul>
+      </div>
+
     </div>
   </footer>
 </body>
