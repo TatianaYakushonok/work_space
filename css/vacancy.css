@@ -1,11 +1,15 @@
 .vacancy {
+  height: 100%;
   padding: 16px;
   border-radius: 16px;
   background: #fff;
+  cursor: pointer;
 }
 
 .vacancy__img {
+  max-height: 44px;
   margin-bottom: 12px;
+  display: block;
 }
 
 .vacancy__company {
