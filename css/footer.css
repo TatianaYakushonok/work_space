@@ -1,0 +1,39 @@
+/*=========================== Footer ================================*/
+
+.footer {
+  padding: 50px 0 40px;
+}
+
+.footer__container {
+  display: grid;
+  grid-template-areas:
+    "logo ."
+    "copyright contacts"
+  ;
+}
+
+.footer__logo {
+  margin-bottom: 27px;
+  grid-area: logo;
+}
+
+.footer__copyright {
+  grid-area: copyright;
+}
+
+.footer__contacts {
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  grid-area: contacts;
+  justify-self: end;
+}
+
+.footer__link {
+  transition: color .3s ease-in-out;
+}
+
+.footer__link:hover {
+  color: #a6adff;
+}

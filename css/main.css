@@ -77,51 +77,6 @@ fieldset {
   padding: 0 var(--padding);
 }
 
-/*=========================== Header ================================*/
-
-.header {
-  padding: 40px 0;
-}
-
-.header__container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.header__link {
-  padding: 12px 32px;
-  font-size: 20px;
-  border-radius: 8px;
-  background-color: #a6adff;
-}
-
-/*=========================== Footer ================================*/
-
-.footer {
-  padding: 40px 0;
-}
-
-.footer__logo {
-  margin-bottom: 27px;
-}
-
-.footer__info {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.footer__contacts {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.footer__link {
-  transition: color .3s ease-in-out;
-}
-
-.footer__link:hover {
-  color: #a6adff;
+.blue-text {
+  color: #2a18ff;
 }
