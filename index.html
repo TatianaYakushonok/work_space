@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/normalize.css">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="preload" href="./fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./style.css">
   <title>Workspace</title>
 </head>
 <body>
@@ -26,8 +26,11 @@
       </div>
     </section>
 
-    <section class="vacancies" id="vacancies">
+    <div class="vacancies" id="vacancies">
       <div class="container vacancies__container">
+
+        <button class="vacancies__filter-btn">Фильтр</button>
+
         <section class="vacancies__filter filter">
           <h2 class="filter__title">Фильтр</h2>
           <form class="filter__form">
@@ -211,7 +214,9 @@
                   <li class="vacancy__field">опыт от 3-х лет</li>
                 </ul>
               </article>
+            </li>
 
+            <li class="cards__item">
               <article class="vacancy" tabindex="0">
                 <img src="./img/vkus-vill.svg" alt="Логотип Вкус Вилл" class="vacancy__img">
                 <p class="vacancy__company">ВкусВилл</p>
@@ -224,7 +229,9 @@
                   <li class="vacancy__field">опыт не важен</li>
                 </ul>
               </article>
+            </li>
 
+            <li class="cards__item">
               <article class="vacancy" tabindex="0">
                 <img src="./img/creative-people.svg" alt="Логотип Creative People" class="vacancy__img">
                 <p class="vacancy__company">Creative People</p>
@@ -237,7 +244,9 @@
                   <li class="vacancy__field">опыт от 1 года до 3-х лет</li>
                 </ul>
               </article>
+            </li>
 
+            <li class="cards__item">
               <article class="vacancy" tabindex="0">
                 <img src="./img/vkus-vill.svg" alt="Логотип ВкусВилл" class="vacancy__img">
                 <p class="vacancy__company">ВкусВилл</p>
@@ -250,7 +259,9 @@
                   <li class="vacancy__field">опыт не важен</li>
                 </ul>
               </article>
+            </li>
 
+            <li class="cards__item">
               <article class="vacancy" tabindex="0">
                 <img src="./img/creative-people.svg" alt="Логотип Creative People" class="vacancy__img">
                 <p class="vacancy__company">Creative People</p>
@@ -263,7 +274,9 @@
                   <li class="vacancy__field">опыт от 1 года до 3-х лет</li>
                 </ul>
               </article>
+            </li>
 
+            <li class="cards__item">
               <article class="vacancy" tabindex="0">
                 <img src="./img/yadro.svg" alt="Логотип YADRO" class="vacancy__img">
                 <p class="vacancy__company">Yadro</p>
@@ -276,7 +289,9 @@
                   <li class="vacancy__field">опыт от 3-х лет</li>
                 </ul>
               </article>
+            </li>
 
+            <li class="cards__item">
               <article class="vacancy" tabindex="0">
                 <img src="./img/creative-people.svg" alt="Логотип Creative People" class="vacancy__img">
                 <p class="vacancy__company">Creative People</p>
@@ -289,7 +304,9 @@
                   <li class="vacancy__field">опыт от 1 года до 3-х лет</li>
                 </ul>
               </article>
+            </li>
 
+            <li class="cards__item">
               <article class="vacancy" tabindex="0">
                 <img src="./img/yadro.svg" alt="Логотип YADRO" class="vacancy__img">
                 <p class="vacancy__company">Yadro</p>
@@ -302,7 +319,9 @@
                   <li class="vacancy__field">опыт от 3-х лет</li>
                 </ul>
               </article>
+            </li>
 
+            <li class="cards__item">
               <article class="vacancy" tabindex="0">
                 <img src="./img/vkus-vill.svg" alt="Логотип ВкусВилл" class="vacancy__img">
                 <p class="vacancy__company">ВкусВилл</p>
@@ -315,7 +334,9 @@
                   <li class="vacancy__field">опыт не важен</li>
                 </ul>
               </article>
+            </li>
 
+            <li class="cards__item">
               <article class="vacancy" tabindex="0">
                 <img src="./img/vkus-vill.svg" alt="Логотип ВкусВилл" class="vacancy__img">
                 <p class="vacancy__company">ВкусВилл</p>
@@ -328,11 +349,13 @@
                   <li class="vacancy__field">опыт не важен</li>
                 </ul>
               </article>
+            </li>
 
+            <li class="cards__item">
               <article class="vacancy" tabindex="0">
                 <img src="./img/creative-people.svg" alt="Логотип Creative People" class="vacancy__img">
                 <p class="vacancy__company">Creative People</p>
-                <h2 class="vacancy__title">Инженер</h2>
+                <h2 class="vacancy__title">Графический дизайнер</h2>
 
                 <ul class="vacancy__fields">
                   <li class="vacancy__field">от 110 000 </li>
@@ -341,7 +364,9 @@
                   <li class="vacancy__field">опыт от 1 года до 3-х лет</li>
                 </ul>
               </article>
+            </li>
 
+            <li class="cards__item">
               <article class="vacancy" tabindex="0">
                 <img src="./img/yadro.svg" alt="Логотип YADRO" class="vacancy__img">
                 <p class="vacancy__company">Yadro</p>
@@ -358,25 +383,23 @@
           </ul>
         </section>
       </div>
-    </section>
+    </div>
   </main>
 
   <footer class="footer">
     <div class="container footer__container">
       <img class="footer__logo" src="./img/logo-footer.svg" alt="Логотип Work Space">
 
-      <div class="footer__info">
-        <p class="footer__copyright">&copy; Work Space, 2023</p>
+      <p class="footer__copyright">&copy; Work Space, 2023</p>
 
-        <ul class="footer__contacts">
-          <li class="footer__contact">
-            Designer: <a class="footer__link" href="#!">Anastasia Ilina</a>
-          </li>
-          <li class="footer__contact">
-            Developer: <a class="footer__link" href="#!">Tatiana Yakushonok</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="footer__contacts">
+        <li class="footer__contact">
+          Designer: <a class="footer__link" href="#!">Anastasia Ilina</a>
+        </li>
+        <li class="footer__contact">
+          Developer: <a class="footer__link" href="#!">Tatiana Yakushonok</a>
+        </li>
+      </ul>
 
     </div>
   </footer>
