@@ -94,16 +94,16 @@ const modalController = ({ modalElem, btnOpen, btnClose, time = 300, open, close
     scrollController.disabledScroll();
   }
 
-  cardsList.addEventListener('click', (e) => {
+  /*cardsList.addEventListener('click', (e) => {
     const vacancyCard = e.target.closest(btnOpen);
     console.log(vacancyCard);
     if (!vacancyCard) return;
     vacancyCard.addEventListener('click', openModal);
-  })
-
-  /*btnElems.forEach(btn => {
-    btn.addEventListener('click', openModal);
   })*/
+
+  btnElems.forEach(btn => {
+    btn.addEventListener('click', openModal);
+  })
 
   modal.addEventListener('click', closeModal);
   modal.closeModal = closeModal;
@@ -119,7 +119,7 @@ const createCard = (vacancy) =>
     <h2 class="vacancy__title">${vacancy.title}</h2>
 
     <ul class="vacancy__fields">
-      <li class="vacancy__field">${parseInt(vacancy.salary).toLocaleString()}₽</li>
+      <li class="vacancy__field">от ${parseInt(vacancy.salary).toLocaleString()}₽</li>
       <li class="vacancy__field">${vacancy.format}</li>
       <li class="vacancy__field">${vacancy.type}</li>
       <li class="vacancy__field">${vacancy.experience}</li>
@@ -152,8 +152,8 @@ const addInfoInModal = () => {
   const modalTitle = document.querySelector('.modal__title');
   const modalInfo = document.querySelector('.modal__info');
   const salary = document.querySelector('.salary');
-  const format = document.querySelector('.format');
   const type = document.querySelector('.type');
+  const format = document.querySelector('.format');
   const experience = document.querySelector('.experience');
   const city = document.querySelector('.module__city');
   const modalLink = document.querySelector('.modal__link');
@@ -163,13 +163,14 @@ const addInfoInModal = () => {
     modalImg.alt = `Логотип компании ${data.company}`;
     modalCompanyName.textContent = `${data.company}`;
     modalTitle.textContent = `${data.title}`;
-    modalInfo.textContent = `${data.description}`;
+    modalInfo.innerHTML = `${data.description.replace('\n', '<br>')}`;
     salary.textContent = `${parseInt(data.salary).toLocaleString()}₽`;
-    format.textContent = `${data.format}`;
     type.textContent = `${data.type}`;
+    format.textContent = `${data.format}`;
     experience.textContent = `${data.experience}`;
     city.textContent = `${data.location}`;
     modalLink.textContent = `${data.email}`;
+    modalLink.href = `emailto: ${data.email}`;
   }
 
   const resetModal = () => {
