@@ -3,8 +3,6 @@ const API_URL = "https://workspace-methed.vercel.app/";
 const LOCATION_URL = "api/locations";
 const VACANCY_URL = "api/vacancy";
 
-const cardsList = document.querySelector('.cards__list');
-
 const getData = async (url, cbSuccess, cbError) => {
   try {
     const response = await fetch(url);
@@ -51,6 +49,7 @@ const scrollController = {
 }
 
 const modalController = ({ modalElem, btnOpen, btnClose, time = 300, open, close }) => {
+  const cardsList = document.querySelector('.cards__list');
   const btnElems = document.querySelectorAll(btnOpen);
   const modal = document.querySelector(modalElem);
 
@@ -87,7 +86,7 @@ const modalController = ({ modalElem, btnOpen, btnClose, time = 300, open, close
   const openModal = (e) => {
 
     if (open) {
-      open({ btn: e.target });
+      open({ btn: e.target.closest(btnOpen) });
     }
     modal.style.visibility = 'visible';
     modal.style.opacity = 1;
@@ -95,9 +94,16 @@ const modalController = ({ modalElem, btnOpen, btnClose, time = 300, open, close
     scrollController.disabledScroll();
   }
 
-  btnElems.forEach(btn => {
-    btn.addEventListener('click', openModal);
+  cardsList.addEventListener('click', (e) => {
+    const vacancyCard = e.target.closest(btnOpen);
+    console.log(vacancyCard);
+    if (!vacancyCard) return;
+    vacancyCard.addEventListener('click', openModal);
   })
+
+  /*btnElems.forEach(btn => {
+    btn.addEventListener('click', openModal);
+  })*/
 
   modal.addEventListener('click', closeModal);
   modal.closeModal = closeModal;
@@ -113,14 +119,14 @@ const createCard = (vacancy) =>
     <h2 class="vacancy__title">${vacancy.title}</h2>
 
     <ul class="vacancy__fields">
-      <li class="vacancy__field">${parseInt(vacancy.salary).toLocaleString()}</li>
+      <li class="vacancy__field">${parseInt(vacancy.salary).toLocaleString()}₽</li>
       <li class="vacancy__field">${vacancy.format}</li>
       <li class="vacancy__field">${vacancy.type}</li>
       <li class="vacancy__field">${vacancy.experience}</li>
     </ul>
   </article>`;
 
-const createCards = ((data) => 
+const createCards = ((data) =>
   data.vacancies.map(vacancy => {
     const li = document.createElement('li');
     li.classList.add('cards__item');
@@ -130,7 +136,7 @@ const createCards = ((data) =>
   })
 )
 
-const renderVacancy = data => {
+const renderVacancy = (data, cardsList) => {
   cardsList.textContent = '';
   const cards = createCards(data);
   cardsList.append(...cards);
@@ -140,7 +146,50 @@ const renderError = err => {
   console.warn(err);
 }
 
-const init = () => {
+const addInfoInModal = () => {
+  const modalImg = document.querySelector('.modal__img');
+  const modalCompanyName = document.querySelector('.modal__company-name');
+  const modalTitle = document.querySelector('.modal__title');
+  const modalInfo = document.querySelector('.modal__info');
+  const salary = document.querySelector('.salary');
+  const format = document.querySelector('.format');
+  const type = document.querySelector('.type');
+  const experience = document.querySelector('.experience');
+  const city = document.querySelector('.module__city');
+  const modalLink = document.querySelector('.modal__link');
+
+  const fillInModal = data => {
+    modalImg.src = `${API_URL}${data.logo}`;
+    modalImg.alt = `Логотип компании ${data.company}`;
+    modalCompanyName.textContent = `${data.company}`;
+    modalTitle.textContent = `${data.title}`;
+    modalInfo.textContent = `${data.description}`;
+    salary.textContent = `${parseInt(data.salary).toLocaleString()}₽`;
+    format.textContent = `${data.format}`;
+    type.textContent = `${data.type}`;
+    experience.textContent = `${data.experience}`;
+    city.textContent = `${data.location}`;
+    modalLink.textContent = `${data.email}`;
+  }
+
+  const resetModal = () => {
+    modalImg.src = '';
+    modalImg.alt = '';
+    modalCompanyName.textContent = '';
+    modalTitle.textContent = '';
+    modalInfo.textContent = '';
+    salary.textContent = '';
+    format.textContent = '';
+    type.textContent = '';
+    experience.textContent = '';
+    city.textContent = '';
+    modalLink.textContent = '';
+  }
+
+  return { fillInModal, resetModal };
+}
+
+const init = async () => {
 
   // SELECT
   const citySelect = document.querySelector('#city');
@@ -158,14 +207,35 @@ const init = () => {
     (err) => console.log(err));
 
   // CARDS
+  const cardsList = document.querySelector('.cards__list');
   const url = new URL(`${API_URL}${VACANCY_URL}`);
 
-  getData(url, renderVacancy, renderError);
+  getData(url, (data) => {
+    renderVacancy(data, cardsList);
+  }, 
+    renderError);
+
+  const getDataVacancy = async () => {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  }
+
+  const data = await getDataVacancy();
+  console.log(data);
+
+  const { fillInModal: fillInModalAdd, resetModal: resetModalAdd } = addInfoInModal();
 
   modalController({
     modalElem: '.modal',
     btnOpen: '.vacancy',
     btnClose: '.modal__close',
+    open({ btn }) {
+      const id = btn.dataset.id;
+      const item = data.vacancies.find(item => item.id.toString() === id);
+      fillInModalAdd(item);
+    },
+    close: resetModalAdd,
   });
 }
 
