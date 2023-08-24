@@ -55,7 +55,7 @@ const modalController = ({ modalElem, btnOpen, btnClose, time = 300, open, close
   const cardsList = document.querySelector('.cards__list');
   const btnElems = document.querySelectorAll(btnOpen);
   const modal = document.querySelector(modalElem);
-
+  console.log(btnElems);
   modal.style.cssText = `
     display: flex;
     visibility: hidden;
@@ -99,7 +99,6 @@ const modalController = ({ modalElem, btnOpen, btnClose, time = 300, open, close
 
   /*cardsList.addEventListener('click', (e) => {
     const vacancyCard = e.target.closest(btnOpen);
-    console.log(vacancyCard);
     if (!vacancyCard) return;
     vacancyCard.addEventListener('click', openModal);
   })*/
@@ -162,6 +161,19 @@ const renderMoreVacancies = (data) => {
   }
 
   observer.observe(cardsList.lastElementChild);
+
+  const { fillInModal: fillInModalAdd, resetModal: resetModalAdd } = addInfoInModal();
+  modalController({
+    modalElem: '.modal',
+    btnOpen: '.vacancy',
+    btnClose: '.modal__close',
+    open({ btn }) {
+      const id = btn.dataset.id;
+      const item = data.vacancies.find(item => item.id.toString() === id);
+      fillInModalAdd(item);
+    },
+    close: resetModalAdd,
+  });
 }
 
 const loadMoreVacancies = () => {
@@ -235,12 +247,22 @@ const observer = new IntersectionObserver(
   }
 );
 
+const openFilter = (e) => {
+  const target = e.target;
+  const vacanciesFilter = document.querySelector('.vacancies__filter');
+
+  if (target) {
+    vacanciesFilter.classList.toggle('vacancies__filter_active');
+  }
+}
+
 const init = async () => {
   
   // SELECT
   const citySelect = document.querySelector('#city');
   const cityChoices = new Choices(citySelect, {
     itemSelectText: '',
+    searchChoices: true,
   });
 
   getData(`${API_URL}${LOCATION_URL}`, 
@@ -270,7 +292,6 @@ const init = async () => {
   }
 
   const data = await getDataVacancy();
-  console.log(data);
 
   const { fillInModal: fillInModalAdd, resetModal: resetModalAdd } = addInfoInModal();
 
@@ -288,6 +309,7 @@ const init = async () => {
 
   // FILTER
   const filterForm = document.querySelector('.filter__form');
+  const filterBtn = document.querySelector('.vacancies__filter-btn');
 
   filterForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -300,8 +322,10 @@ const init = async () => {
     })
 
     getData(urlWithParam, renderVacancy, renderError)
-      .then(() => lastUrl = url);
+      .then(() => lastUrl = urlWithParams);
   })
+
+  filterBtn.addEventListener('click', openFilter);
 }
 
 init();
