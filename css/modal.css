@@ -92,3 +92,50 @@
 .modal__close:hover {
   transform: scale(1.2);
 }
+
+@media (max-width: 940px)  {
+  .modal__body {
+    max-width: 680px;
+    padding: 24px 24px 72px;
+    gap: 32px 10px;
+  }
+
+  .modal__info {
+    max-width: 418px;
+  }
+}
+
+@media (max-width: 640px) {
+  .modal {
+    padding: 15px;
+  }
+
+  .modal__body {
+    padding: 24px 15px;
+    gap: 24px 8px;
+  }
+
+  .modal__img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .modal__company-name {
+    margin-bottom: 4px;
+    font-size: 20px;
+    letter-spacing: 0.4px;
+  }
+
+  .modal__title {
+    font-size: 12px;
+  }
+
+  .modal__info {
+    max-width: 100%;
+    grid-column: 1/4;
+  }
+
+  .modal__fields {
+    grid-column: 1/4;
+  }
+}

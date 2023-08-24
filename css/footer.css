@@ -37,3 +37,41 @@
 .footer__link:hover {
   color: #a6adff;
 }
+
+@media (max-width: 1140px) {
+  .footer {
+    padding: 40px 0 32px;
+  }
+}
+
+@media (max-width: 940px) {
+  .footer {
+    padding: 30px 0 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding-top: 20px;
+  }
+
+  .footer__container {
+    grid-template-areas:
+      "logo "
+      "copyright"
+      "contacts"
+    ;
+  }
+
+  .footer__logo {
+    margin-bottom: 16px;
+  }
+
+  .footer__copyright {
+    margin-bottom: 30px;
+  }
+
+  .footer__contacts {
+    justify-self: start;
+  }
+}

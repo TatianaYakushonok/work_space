@@ -3,6 +3,9 @@ const API_URL = "https://workspace-methed.vercel.app/";
 const LOCATION_URL = "api/locations";
 const VACANCY_URL = "api/vacancy";
 
+let lastUrl =``;
+const pagination = {};
+
 const getData = async (url, cbSuccess, cbError) => {
   try {
     const response = await fetch(url);
@@ -136,10 +139,40 @@ const createCards = ((data) =>
   })
 )
 
-const renderVacancy = (data, cardsList) => {
+const renderVacancy = (data) => {
+  const cardsList = document.querySelector('.cards__list');
   cardsList.textContent = '';
   const cards = createCards(data);
   cardsList.append(...cards);
+
+  if (data.pagination) {
+    Object.assign(pagination, data.pagination);
+  }
+
+  observer.observe(cardsList.lastElementChild);
+}
+
+const renderMoreVacancies = (data) => {
+  const cardsList = document.querySelector('.cards__list');
+  const cards = createCards(data);
+  cardsList.append(...cards);
+
+  if (data.pagination) {
+    Object.assign(pagination, data.pagination);
+  }
+
+  observer.observe(cardsList.lastElementChild);
+}
+
+const loadMoreVacancies = () => {
+  if (pagination.totalPages > pagination.currentPage) {
+    const urlWithParams = new URL(lastUrl);
+    urlWithParams.searchParams.set('page', pagination.currentPage + 1);
+    urlWithParams.searchParams.set('limit', window.innerWidth < 768 ? 6 : 12);
+
+    getData(urlWithParams, renderMoreVacancies, renderError)
+      .then(() => lastUrl = urlWithParams);
+  }
 }
 
 const renderError = err => {
@@ -190,8 +223,20 @@ const addInfoInModal = () => {
   return { fillInModal, resetModal };
 }
 
-const init = async () => {
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        loadMoreVacancies();
+      }
+    })
+  }, {
+    rootMargin: '100px'
+  }
+);
 
+const init = async () => {
+  
   // SELECT
   const citySelect = document.querySelector('#city');
   const cityChoices = new Choices(citySelect, {
@@ -208,16 +253,18 @@ const init = async () => {
     (err) => console.log(err));
 
   // CARDS
-  const cardsList = document.querySelector('.cards__list');
-  const url = new URL(`${API_URL}${VACANCY_URL}`);
+  const urlWithParams = new URL(`${API_URL}${VACANCY_URL}`);
 
-  getData(url, (data) => {
-    renderVacancy(data, cardsList);
-  }, 
-    renderError);
+  urlWithParams.searchParams.set('limit', window.innerWidth < 768 ? 6 : 12);
+  urlWithParams.searchParams.set('page', 1);
+  
+  getData(urlWithParams, renderVacancy, renderError)
+    .then(() => lastUrl = urlWithParams);
+
+  // MODAL
 
   const getDataVacancy = async () => {
-    const response = await fetch(url);
+    const response = await fetch(urlWithParams);
     const data = await response.json();
     return data;
   }
@@ -238,6 +285,23 @@ const init = async () => {
     },
     close: resetModalAdd,
   });
+
+  // FILTER
+  const filterForm = document.querySelector('.filter__form');
+
+  filterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(filterForm);
+    const urlWithParam = new URL(`${API_URL}${VACANCY_URL}`);
+
+    formData.forEach((value, key) => {
+      urlWithParam.searchParams.append(key, value);
+    })
+
+    getData(urlWithParam, renderVacancy, renderError)
+      .then(() => lastUrl = url);
+  })
 }
 
 init();
