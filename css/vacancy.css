@@ -2,8 +2,19 @@
   height: 100%;
   padding: 16px;
   border-radius: 16px;
-  background: #fff;
+  background-color: #fff;
   cursor: pointer;
+  outline: none;
+  border: 2px solid transparent;
+  transition: background-color .3s ease-in-out ;
+}
+
+.vacancy:hover {
+  background-color: #f9faff;
+}
+
+.vacancy:focus-visible {
+  border-color: #a6adff;
 }
 
 .vacancy__img {
