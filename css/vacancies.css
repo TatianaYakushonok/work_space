@@ -33,46 +33,63 @@
 
   .vacancies__container {
     flex-direction: column;
-    row-gap: 32px;
+    row-gap: 0;
   }
 
   .vacancies__filter-btn {
     display: flex;
     align-items: center;
+    color: #2a18ff;
+    margin-bottom: 24px;
+    transition: margin-bottom .2s ease-in-out;
+    transition-delay: .2s;
+    transition: color .2s ease-in-out;
   }
 
-  .vacancies__filter-btn::after {
-    content: '';
+  .vacancies__filter-btn:hover:not(:focus) {
+    color: #a6adff;
+  }
+
+  .vacancies__filter-btn-arrow {
+    position: relative;
+    top: -2px;
     display: block;
     width: 20px;
     height: 20px;
-    background: url('../img/filter-arrow.svg') no-repeat center;
+    transition-delay: .3s;
   }
 
-  .vacancies__filter-btn_active::after {
+  .vacancies__filter-btn_active {
+    transition-delay: 0s;
+  }
+
+  .vacancies__filter-btn_active .vacancies__filter-btn-arrow {
     transform: rotate(180deg);
+    top: 2px;
   }
 
   .vacancies__filter {
     width: 100%;
     flex-basis: auto;
-    height: 0;
+    max-height: 0;
     overflow: hidden;
-    transition: height .4s ease-in-out;
+    transition: all .8s ease-in-out;
   }
 
   .vacancies__filter_active {
-    height: auto;
+    max-height: 100rem;
+    margin-bottom: 40px;
+    transition: all .8s ease-in-out;
   }
 
   .vacancies__cards {
-    padding-top: 8px;
     width: 100%;
   }
 }
 
 @media (max-width: 640px) {
-  .vacancies__container {
-    row-gap: 24px;
+  
+  .vacancies__filter-btn_active {
+    margin-bottom: 24px;
   }
 }

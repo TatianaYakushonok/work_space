@@ -68,6 +68,17 @@
   padding: 8px 24px;
   border-radius: 4px;
   background-color: #a6adff;
+  border: 2px solid transparent;
+  transition: color, background-color .3s ease-in-out;
+}
+
+.filter__btn:focus-visible {
+  border-color: #4f58be;
+}
+
+.filter__btn:hover {
+  color: #fff;
+  background-color: #2a18ff;
 }
 
 @media (max-width: 940px) {
@@ -87,6 +98,7 @@
   .filter__checkboxes {
     flex-direction: row;
     flex-wrap: wrap;
+    gap: 24px 70px;
   }
 
   .filter__buttons {

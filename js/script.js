@@ -52,7 +52,6 @@ const scrollController = {
 }
 
 const modalController = ({ modalElem, btnOpen, btnClose, time = 300, open, close }) => {
-  const cardsList = document.querySelector('.cards__list');
   const btnElems = document.querySelectorAll(btnOpen);
   const modal = document.querySelector(modalElem);
   console.log(btnElems);
@@ -97,14 +96,10 @@ const modalController = ({ modalElem, btnOpen, btnClose, time = 300, open, close
     scrollController.disabledScroll();
   }
 
-  /*cardsList.addEventListener('click', (e) => {
-    const vacancyCard = e.target.closest(btnOpen);
-    if (!vacancyCard) return;
-    vacancyCard.addEventListener('click', openModal);
-  })*/
-
   btnElems.forEach(btn => {
-    btn.addEventListener('click', openModal);
+    if (btn.closest(btnOpen)) {
+      btn.addEventListener('click', openModal);
+    }
   })
 
   modal.addEventListener('click', closeModal);
@@ -163,6 +158,7 @@ const renderMoreVacancies = (data) => {
   observer.observe(cardsList.lastElementChild);
 
   const { fillInModal: fillInModalAdd, resetModal: resetModalAdd } = addInfoInModal();
+
   modalController({
     modalElem: '.modal',
     btnOpen: '.vacancy',
@@ -250,9 +246,11 @@ const observer = new IntersectionObserver(
 const openFilter = (e) => {
   const target = e.target;
   const vacanciesFilter = document.querySelector('.vacancies__filter');
+  const vacansiesFilterBtn = document.querySelector('.vacancies__filter-btn');
 
   if (target) {
     vacanciesFilter.classList.toggle('vacancies__filter_active');
+    vacansiesFilterBtn.classList.toggle('vacancies__filter-btn_active');
   }
 }
 
@@ -262,6 +260,7 @@ const init = async () => {
   const citySelect = document.querySelector('#city');
   const cityChoices = new Choices(citySelect, {
     itemSelectText: '',
+    position: 'bottom',
     searchChoices: true,
   });
 

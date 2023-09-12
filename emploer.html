@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preload" href="./fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="./style.css">
+
+  <script src="./js/choices.min.js" defer></script>
+  <script src="./js/script.js" defer></script>
+
+  <title>Workspace - добавить вакансию</title>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__container">
+      <img src="./img/logo.svg" alt="Логотип Work Space" class="header__logo">
+      <a href="#vacancies" class="header__link">Посмотреть вакансии</a>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="emploer">
+      <div class="container">
+        <h1 class="emploer__title">Создай свою вакансию</h1>
+
+        <form class="emploer__form form">
+          <div class="emploer__file file">
+            <div class="file__wrap-prewiev">
+              <img src="/" alt="" class="file__prewiev">
+            </div>
+
+            <div class="file__wrap-btn">
+              <label class="file__label" for="logo">+ загрузить лого</label>
+              <input 
+                class="file__input"
+                type="file" 
+                name="logo"
+                id="logo"
+                accept="image/png, image/jpeg"
+              >
+            </div>
+          </div>
+
+          <fieldset class="emploer__fieldset-input">
+            <div class="emploer__wrap-input">
+              <label class="emploer__label" for="company">Название компании</label>
+              <input
+                class="emploer__input"
+                type="text"
+                id="company"
+                name="company"
+                placeholder="Например: MICROSOFT"
+              >
+            </div>
+
+            <div class="emploer__wrap-input">
+              <label class="emploer__label" for="title">Название вакансии</label>
+              <input
+                class="emploer__input"
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Например: Frontend-разработчик"
+              >
+            </div>
+
+            <div class="emploer__wrap-input">
+              <label class="emploer__label" for="salary">Заработная плата, руб/мес</label>
+              <input
+                class="emploer__input"
+                type="number"
+                id="salary"
+                name="salary"
+                placeholder="80 000"
+              >
+            </div>
+
+            <div class="emploer__wrap-input">
+              <label class="emploer__label" for="location">Город</label>
+              <input
+                class="emploer__input"
+                type="text"
+                id="location"
+                name="location"
+                placeholder="Например: Москва"
+              >
+            </div>
+
+            <div class="emploer__wrap-input">
+              <label class="emploer__label" for="email">E-mail</label>
+              <input
+                class="emploer__input"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Добавьте e-mail для связи"
+              >
+            </div>
+          </fieldset>
+
+          <fieldset class="emploer__fieldset-textarea">
+            <label class="emploer__label" for="description">Описание вакансии</label>
+            <textarea
+              name="description"
+              id="description"
+              placeholder="Добавьте всю необходимую для соискателя информацию">
+            </textarea>
+          </fieldset>
+
+          <div class="emploer__radio-buttons">
+            <fieldset class="emploer__fieldset-radio">
+              <legend class="emploer__legend">Формат</legend>
+
+              <label class="emploer__label-radio radio">
+                <input 
+                  class="radio__input" 
+                  type="radio" 
+                  name="format" 
+                  value="Офис"
+                >
+                Офис
+              </label>
+
+              <label class="emploer__label-radio radio">
+                <input 
+                  class="radio__input" 
+                  type="radio" 
+                  name="format" 
+                  value="Удаленный"
+                >
+                Удаленный
+              </label>
+
+              <label class="emploer__label-radio radio">
+                <input 
+                  class="radio__input" 
+                  type="radio" 
+                  name="format" 
+                  value="Гибкий"
+                >
+                Гибкий
+              </label>
+
+            </fieldset>
+
+            <fieldset class="emploer__fieldset-radio">
+              <legend class="emploer__legend">Опыт работы</legend>
+
+              <label class="emploer__label-radio radio">
+                <input 
+                  class="radio__input" 
+                  type="radio" 
+                  name="experience" 
+                  value="Не важно"
+                >
+                Не важно
+              </label>
+
+              <label class="emploer__label-radio radio">
+                <input 
+                  class="radio__input" 
+                  type="radio" 
+                  name="experience" 
+                  value="Без опыта"
+                >
+                Без опыта
+              </label>
+
+              <label class="emploer__label-radio radio">
+                <input 
+                  class="radio__input" 
+                  type="radio" 
+                  name="experience" 
+                  value="От 1 года до 3 лет"
+                >
+                От 1 года до 3 лет
+              </label>
+
+              <label class="emploer__label-radio radio">
+                <input 
+                  class="radio__input" 
+                  type="radio" 
+                  name="experience" 
+                  value="От 3 лет"
+                >
+                От 3 лет
+              </label>
+
+            </fieldset>
+
+            <fieldset class="emploer__fieldset-radio">
+              <legend class="emploer__legend">Занятость</legend>
+
+              <label class="emploer__label-radio radio">
+                <input 
+                  class="radio__input" 
+                  type="radio" 
+                  name="type" 
+                  value="Полная"
+                >
+                Полная занятость
+              </label>
+
+              <label class="emploer__label-radio radio">
+                <input 
+                  class="radio__input" 
+                  type="radio" 
+                  name="type" 
+                  value="Частичная"
+                >
+                Частичная занятость
+              </label>
+
+              <label class="emploer__label-radio radio">
+                <input 
+                  class="radio__input" 
+                  type="radio" 
+                  name="type" 
+                  value="Стажировка"
+                >
+                Стажировка
+              </label>
+
+              <label class="emploer__label-radio radio">
+                <input 
+                  class="radio__input" 
+                  type="radio" 
+                  name="type" 
+                  value="Проектная работа"
+                >
+                Проектная работа
+              </label>
+            </fieldset>
+          </div>
+
+          <div class="emploer__wrap-submit">
+            <button class="emploer__submit" type="submit">
+              Добавить вакансию
+            </button>
+            <div class="emploer__error">
+              <p>Ошибка. Заполните все поля</p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__container">
+      <img class="footer__logo" src="./img/logo-footer.svg" alt="Логотип Work Space">
+
+      <p class="footer__copyright">&copy; Work Space, 2023</p>
+
+      <ul class="footer__contacts">
+        <li class="footer__contact">
+          Designer: <a class="footer__link" href="#!">Anastasia Ilina</a>
+        </li>
+        <li class="footer__contact">
+          Developer: <a class="footer__link" href="#!">Tatiana Yakushonok</a>
+        </li>
+      </ul>
+
+    </div>
+  </footer>
+
+  <div class="modal">
+    <div class="modal__body">
+
+      <img src="./img/creative-people.svg" alt="Логотип Creative People" class="modal__img">
+
+      <div class="modal__company">
+        <p class="modal__company-name">Creative People</p>
+        <h2 class="modal__title">Графический дизайнер</h2>
+      </div>
+
+      <p class="modal__info">
+        Привет. Мы в CreativePeople ищем middle графического дизайнера в свою дизайн команду. Удаленно, из любой точки нашей страны, где у вас будет хороший интернет. Опыт работы в разработке логотипов, фирменных стилей обязателен.
+        <br>
+        У нас в портфолио много крупных российских компаний, с некоторыми мы работаем уже много лет и делаем самые разные проекты, от сайтов до мобильных приложений.
+      </p>
+
+      <ul class="modal__fields">
+        <li class="modal__field salary">от 110 000 ₽</li>
+        <li class="modal__field type">проектная работа</li>
+        <li class="modal__field format">удаленный</li>
+        <li class="modal__field experience">опыт от 1 года до 3-х лет</li>
+        <li class="modal__field module__city">Москва</li>
+      </ul>
+
+      <p class="modal__contacts">
+        Отправляйте резюме на 
+        <a class="modal__link blue-text" href="emailto: CreativePeople@gmail.com">CreativePeople@gmail.com</a>
+      </p>
+
+      <button type="button" class="modal__close"></button>
+    </div>
+  </div>
+</body>
+</html>
