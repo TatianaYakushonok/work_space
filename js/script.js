@@ -255,76 +255,178 @@ const openFilter = (e) => {
 }
 
 const init = async () => {
-  
-  // SELECT
-  const citySelect = document.querySelector('#city');
-  const cityChoices = new Choices(citySelect, {
-    itemSelectText: '',
-    position: 'bottom',
-    searchChoices: true,
-  });
 
-  getData(`${API_URL}${LOCATION_URL}`, 
-    (locationData) => {
-      const locations = locationData.map(location => ({
-        value: location,
-      }));
-      cityChoices.setChoices(locations, 'value', 'label', true);
-    }, 
-    (err) => console.log(err));
+  try {
+    // SELECT
+    const citySelect = document.querySelector('#city');
+    const cityChoices = new Choices(citySelect, {
+      itemSelectText: '',
+      position: 'bottom',
+      searchChoices: true,
+    });
 
-  // CARDS
-  const urlWithParams = new URL(`${API_URL}${VACANCY_URL}`);
+    getData(`${API_URL}${LOCATION_URL}`, 
+      (locationData) => {
+        const locations = locationData.map(location => ({
+          value: location,
+        }));
+        cityChoices.setChoices(locations, 'value', 'label', true);
+      }, 
+      (err) => console.log(err));
 
-  urlWithParams.searchParams.set('limit', window.innerWidth < 768 ? 6 : 12);
-  urlWithParams.searchParams.set('page', 1);
-  
-  getData(urlWithParams, renderVacancy, renderError)
-    .then(() => lastUrl = urlWithParams);
+    // CARDS
+    const urlWithParams = new URL(`${API_URL}${VACANCY_URL}`);
 
-  // MODAL
+    urlWithParams.searchParams.set('limit', window.innerWidth < 768 ? 6 : 12);
+    urlWithParams.searchParams.set('page', 1);
+    
+    getData(urlWithParams, renderVacancy, renderError)
+      .then(() => lastUrl = urlWithParams);
 
-  const getDataVacancy = async () => {
-    const response = await fetch(urlWithParams);
-    const data = await response.json();
-    return data;
-  }
+    // MODAL
 
-  const data = await getDataVacancy();
+    const getDataVacancy = async () => {
+      const response = await fetch(urlWithParams);
+      const data = await response.json();
+      return data;
+    }
 
-  const { fillInModal: fillInModalAdd, resetModal: resetModalAdd } = addInfoInModal();
+    const data = await getDataVacancy();
 
-  modalController({
-    modalElem: '.modal',
-    btnOpen: '.vacancy',
-    btnClose: '.modal__close',
-    open({ btn }) {
-      const id = btn.dataset.id;
-      const item = data.vacancies.find(item => item.id.toString() === id);
-      fillInModalAdd(item);
-    },
-    close: resetModalAdd,
-  });
+    const { fillInModal: fillInModalAdd, resetModal: resetModalAdd } = addInfoInModal();
 
-  // FILTER
-  const filterForm = document.querySelector('.filter__form');
-  const filterBtn = document.querySelector('.vacancies__filter-btn');
+    modalController({
+      modalElem: '.modal',
+      btnOpen: '.vacancy',
+      btnClose: '.modal__close',
+      open({ btn }) {
+        const id = btn.dataset.id;
+        const item = data.vacancies.find(item => item.id.toString() === id);
+        fillInModalAdd(item);
+      },
+      close: resetModalAdd,
+    });
 
-  filterForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+    // FILTER
+    const filterForm = document.querySelector('.filter__form');
+    const filterBtn = document.querySelector('.vacancies__filter-btn');
 
-    const formData = new FormData(filterForm);
-    const urlWithParam = new URL(`${API_URL}${VACANCY_URL}`);
+    filterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-    formData.forEach((value, key) => {
-      urlWithParam.searchParams.append(key, value);
+      const formData = new FormData(filterForm);
+      const urlWithParam = new URL(`${API_URL}${VACANCY_URL}`);
+
+      formData.forEach((value, key) => {
+        urlWithParam.searchParams.append(key, value);
+      })
+
+      getData(urlWithParam, renderVacancy, renderError)
+        .then(() => lastUrl = urlWithParams);
     })
 
-    getData(urlWithParam, renderVacancy, renderError)
-      .then(() => lastUrl = urlWithParams);
-  })
+    filterBtn.addEventListener('click', openFilter);
+  } catch (error) {
+    console.log('error: ', error);
+    console.warn('мы не на стринице index.html');
+  }
 
-  filterBtn.addEventListener('click', openFilter);
+  try {
+    const validationForm = form => {
+      const validate = new JustValidate(form, {
+        errorFieldCssClass: ['invalid'],
+        errorLabelStyle: {
+          color: '#f00',
+        },
+        errorsContainer: document.querySelector('.emploer__error'),
+      });
+      validate
+      .addField('#logo', [
+        {
+          rule: 'minFilesCount',
+          value: 1,
+          errorMessage: 'Добавьте логотип'
+        },
+        {
+          rule: 'files',
+          value: {
+            files: {
+              extensions: ['jpeg', 'png', 'jpg'],
+              maxSize: 102400,
+              minSize: 1000,
+              types: ['image/jpeg', 'image/png'],
+            },
+          },
+          errorMessage: 'Размер файла должен быть не больше 100kb'
+        }
+      ])
+      .addField('#company', [{
+        rule: 'required', errorMessage: 'Заполните название компании'
+      }])
+      .addField('#title', [{
+        rule: 'required', errorMessage: 'Заполните название вакансии'
+      }])
+      .addField('#salary', [{
+        rule: 'required', errorMessage: 'Заполните заработную плату'
+      }])
+      .addField('#location', [{
+        rule: 'required', errorMessage: 'Заполните город'
+      }])
+      .addField('#email', [
+        {
+          rule: 'email',
+          errorMessage: 'Введите корректный email'
+        },
+        {
+          rule: 'required',
+          errorMessage: 'Заполните email'
+        }
+      ])
+      .addField('#description', [{
+        rule: 'required', errorMessage: 'Заполните описание вакансии'
+      }])
+      .addRequiredGroup('#format', 'Выберите формат работы')
+      .addRequiredGroup('#experience', 'Выберите опыт работы')
+      .addRequiredGroup('#type', 'Выберите занятость')
+    }
+
+    const fileController = () => {
+      const file = document.querySelector('.file');
+      const prewiev = file.querySelector('.file__prewiev');
+      const input = file.querySelector('.file__input');
+
+      input.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+          const src = URL.createObjectURL(e.target.files[0]);
+          file.classList.add('file--active');
+          prewiev.src = src;
+          prewiev.style.display = 'block';
+        }
+        else {
+          file.classList.remove('file--active');
+          prewiev.src = '';
+          prewiev.style.display = 'none';
+        }
+      })
+    }
+
+    const formControl = () => {
+      const form = document.querySelector('.emploer__form');
+
+      validationForm(form);
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+      })
+    }
+
+    formControl();
+    fileController();
+  } catch (error) {
+    console.log('error: ', error);
+    console.warn('мы не на стринице emploer.html');
+  }
+  
 }
 
 init();

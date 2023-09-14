@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="./style.css">
 
-  <script src="./js/choices.min.js" defer></script>
+  <script src="./js/just-validate.min.js" defer></script>
   <script src="./js/script.js" defer></script>
 
   <title>Workspace - добавить вакансию</title>
@@ -20,7 +20,9 @@
         <img src="./img/logo.svg" alt="Логотип Work Space" class="header__logo">
       </a>
       
-      <a href="./index.html#vacancies" class="header__link">Посмотреть вакансии</a>
+      <div class="header__links">
+        <a href="./index.html#vacancies" class="header__link">Посмотреть вакансии</a>
+      </div>
     </div>
   </header>
 
@@ -37,14 +39,7 @@
 
             <div class="file__wrap-btn">
               <label class="file__label" for="logo">+ загрузить лого</label>
-              <input 
-                class="file__input"
-                type="file" 
-                name="logo"
-                id="logo"
-                accept="image/png, image/jpeg"
-                required
-              >
+              <input class="file__input" type="file" name="logo" id="logo" accept="image/png, image/jpeg" required>
             </div>
           </div>
 
@@ -111,7 +106,7 @@
           </fieldset>
 
           <div class="emploer__radio-buttons">
-            <fieldset class="emploer__fieldset-radio">
+            <fieldset class="emploer__fieldset-radio" id="format">
               <legend class="emploer__legend">Формат</legend>
 
               <label class="emploer__label-radio radio">
@@ -146,7 +141,7 @@
 
             </fieldset>
 
-            <fieldset class="emploer__fieldset-radio">
+            <fieldset class="emploer__fieldset-radio" id="experience">
               <legend class="emploer__legend">Опыт работы</legend>
 
               <label class="emploer__label-radio radio">
@@ -191,7 +186,7 @@
 
             </fieldset>
 
-            <fieldset class="emploer__fieldset-radio">
+            <fieldset class="emploer__fieldset-radio" id="type">
               <legend class="emploer__legend">Занятость</legend>
 
               <label class="emploer__label-radio radio">
@@ -241,7 +236,7 @@
               Добавить вакансию
             </button>
             <div class="emploer__error">
-              <p>Ошибка. Заполните все поля</p>
+              <!--<p>Ошибка. Заполните все поля</p>-->
             </div>
           </div>
         </form>

@@ -11,6 +11,11 @@
   margin-bottom: 12px;
 }
 
+.file--active .file__wrap-prewiev {
+  min-width: auto;
+  background-color: transparent;
+}
+
 .file__wrap-prewiev--active {
   min-width: auto;
 }
@@ -47,6 +52,15 @@
   opacity: 0;
 }
 
+.file__input:required {
+  opacity: 1;
+}
+
 .file__wrap-btn:focus-within .file__label {
   border-color: #4f58be;
+}
+
+.invalid {
+  color: #f00;
+  border: 1px solid #f00;
 }

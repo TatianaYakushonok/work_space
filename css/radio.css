@@ -29,8 +29,7 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background-color: #000;
-  /*background: url("../img/check.svg") no-repeat center;*/
+  background-color: #171717;
   opacity: 0;
   transition: opacity .3s ease-in-out;
 }
