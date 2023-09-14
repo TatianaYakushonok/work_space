@@ -16,8 +16,11 @@
 
   <header class="header">
     <div class="container header__container">
-      <img src="./img/logo.svg" alt="Логотип Work Space" class="header__logo">
-      <a href="#vacancies" class="header__link">Посмотреть вакансии</a>
+      <a href="./index.html">
+        <img src="./img/logo.svg" alt="Логотип Work Space" class="header__logo">
+      </a>
+      
+      <a href="./index.html#vacancies" class="header__link">Посмотреть вакансии</a>
     </div>
   </header>
 
@@ -40,11 +43,12 @@
                 name="logo"
                 id="logo"
                 accept="image/png, image/jpeg"
+                required
               >
             </div>
           </div>
 
-          <fieldset class="emploer__fieldset-input">
+          <fieldset class="emploer__fieldset emploer__fieldset-input">
             <div class="emploer__wrap-input">
               <label class="emploer__label" for="company">Название компании</label>
               <input
@@ -101,9 +105,10 @@
             </div>
           </fieldset>
 
-          <fieldset class="emploer__fieldset-textarea">
+          <fieldset class="emploer__fieldset emploer__fieldset-textarea">
             <label class="emploer__label" for="description">Описание вакансии</label>
             <textarea
+              class="emploer__textarea"
               name="description"
               id="description"
               placeholder="Добавьте всю необходимую для соискателя информацию">
