@@ -7,7 +7,14 @@
 .header__container {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
+}
+
+.header__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .header__link {
@@ -17,6 +24,12 @@
   background-color: #a6adff;
   border: 2px solid transparent;
   transition: color, background-color .3s ease-in-out;
+}
+
+.header__link--o {
+  border-radius: 8px;
+  border-color: #A6ADFF;
+  background-color: transparent;
 }
 
 .header__link:focus-visible {
@@ -49,8 +62,17 @@
   .header {
     padding: 24px 0 20px;
   }
+}
 
+@media (max-width: 625px) {
+  .header__logo {
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 320px) {
   .header__link {
-    display: none;
+    width: 100%;
+    text-align: center;
   }
 }
