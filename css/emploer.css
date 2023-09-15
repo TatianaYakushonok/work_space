@@ -41,7 +41,7 @@
 }
 
 .emploer__input:focus-visible {
-  outline: 1px solid #A6ADFF;
+  outline: 1px solid #a6adff;
 }
 
 .emploer__textarea {
@@ -58,7 +58,7 @@
 }
 
 .emploer__textarea:focus-visible {
-  outline: 1px solid #A6ADFF;
+  outline: 1px solid #a6adff;
 }
 
 .emploer__radio-buttons {
@@ -106,6 +106,10 @@
 
 .emploer__error {
   color: #f00;
+}
+
+.employer__fieldset-radio:has(* > just-validate-error-field) .employer__legend {
+  color:red;
 }
 
 @media (max-width: 1140px) {
