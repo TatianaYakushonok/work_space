@@ -1,5 +1,5 @@
 
-const API_URL = "https://workspace-methed.vercel.app/";
+const API_URL = "https://mirage-decisive-border.glitch.me/";
 const LOCATION_URL = "api/locations";
 const VACANCY_URL = "api/vacancy";
 
@@ -254,6 +254,22 @@ const openFilter = (e) => {
   }
 }
 
+const inputNumberControler = () => {
+  const inputNumberElements = document.querySelectorAll('input[type="number"]');
+
+  inputNumberElements.forEach(input => {
+    let value = '';
+    input.addEventListener('input', (e) => {
+      
+      if (isNaN(parseInt(e.data))) {
+        e.target.value = value;
+      }
+      //input.value = input.value.replace(/D+/g, '');
+      value = e.target.value;
+    })
+  })
+}
+
 const init = async () => {
 
   try {
@@ -338,6 +354,9 @@ const init = async () => {
         errorLabelStyle: {
           color: '#f00',
         },
+        errorFieldStyle: {
+          borderColor: '#f00',
+        },
         errorsContainer: document.querySelector('.emploer__error'),
       });
       validate
@@ -385,43 +404,110 @@ const init = async () => {
       .addField('#description', [{
         rule: 'required', errorMessage: 'Заполните описание вакансии'
       }])
-      .addRequiredGroup('#format', 'Выберите формат работы')
-      .addRequiredGroup('#experience', 'Выберите опыт работы')
-      .addRequiredGroup('#type', 'Выберите занятость')
+      .addRequiredGroup('#format', 'Выберите формат работы', {
+        errorFieldCssClass: 'radio__input--error',
+      })
+      .addRequiredGroup('#experience', 'Выберите опыт работы', {
+        errorFieldCssClass: 'radio__input--error',
+      })
+      .addRequiredGroup('#type', 'Выберите занятость', {
+        errorFieldCssClass: 'radio__input--error',
+      })
+
+      return validate;
     }
 
     const fileController = () => {
       const file = document.querySelector('.file');
-      const prewiev = file.querySelector('.file__prewiev');
+      const preview = file.querySelector('.file__prewiev');
       const input = file.querySelector('.file__input');
+
+      /*let myDropzone = new Dropzone(".file__wrap-prewiev", { 
+        url: "/file/post",
+        acceptedFiles: '.png, .jpg, jepg',
+        init: function() {
+          this.on("addedfile", file => {
+            setTimeout(() => {
+              preview.src = file.dataURL;
+            }, 500)
+            input.files[0] = file;
+          });
+        }
+      });*/
 
       input.addEventListener('change', (e) => {
         if (e.target.files.length > 0) {
           const src = URL.createObjectURL(e.target.files[0]);
           file.classList.add('file--active');
-          prewiev.src = src;
-          prewiev.style.display = 'block';
+          preview.src = src;
+          preview.style.display = 'block';
         }
         else {
           file.classList.remove('file--active');
-          prewiev.src = '';
-          prewiev.style.display = 'none';
+          preview.src = '';
+          preview.style.display = 'none';
+        }
+      })
+    }
+
+    const showInvalidRadioTitle = () => {
+      const emploerFieldsetRadioElems = document.querySelectorAll('.emploer__fieldset-radio');
+
+      emploerFieldsetRadioElems.forEach((emploerFieldsetRadio) => {
+        const emploerLegend = emploerFieldsetRadio.querySelector('.emploer__legend');
+        const emploerRadioElems = emploerFieldsetRadio.querySelectorAll('.radio__input');
+
+        const isInValid = [...emploerRadioElems].some(radio =>
+          radio.classList.contains('radio__input--error')
+        )
+        
+        if (isInValid) {
+          emploerLegend.style.color = '#f00';
+        }
+        else {
+          emploerLegend.style.color = '';
         }
       })
     }
 
     const formControl = () => {
       const form = document.querySelector('.emploer__form');
+      const emploerError = document.querySelector('.emploer__error');
+      const validate = validationForm(form);
 
-      validationForm(form);
-
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
+
+        if (!validate.isValid) {
+          showInvalidRadioTitle();
+          form.addEventListener('input', showInvalidRadioTitle);
+          return;
+        }
+
+        try {
+          const formData = new FormData(form);
+          emploerError.textContent = 'Отправка, подождите...';
+
+          const response = await fetch(`${API_URL}${VACANCY_URL}`, {
+            method: 'POST',
+            body: formData
+          })
+
+          if (response.ok) {
+            window.location.href = 'index.html';
+            emploerError.textContent = 'Вакансия добавлена';
+          }
+        } catch (error) {
+          emploerError.textContent = 'Произошла ошибка';
+          console.error(error);
+        }
       })
     }
 
     formControl();
     fileController();
+    inputNumberControler();
+
   } catch (error) {
     console.log('error: ', error);
     console.warn('мы не на стринице emploer.html');
